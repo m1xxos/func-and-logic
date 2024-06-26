@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "GhL0KQQ48/I=",
+  "success": true,
+  "projectFilePath": "/Users/m1xxos/projects/func and logic/FirstIonideProject/FirstIonideProject.fsproj",
+  "expectedPackageFiles": [
+    "/Users/m1xxos/.nuget/packages/fsharp.core/8.0.300/fsharp.core.8.0.300.nupkg.sha512"
+  ],
+  "logs": []
+}
