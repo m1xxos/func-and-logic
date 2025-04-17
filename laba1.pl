@@ -15,7 +15,6 @@ person("Федор", male).
 person("Наталья", female).
 person("Макар", male).
 person("Игнат", male).
-person("Игнат", male).
 
 
 % Дети Вячеслава и Ольги
@@ -51,9 +50,8 @@ father(X, Y) :-
     person(X, male).
 
 daughter(X, Y) :-
-    parent(X, Y),
-    person(X, male),
-    person(Y, female).
+    parent(Y, X),
+    person(X, female).
 
 brother(X, Y) :-
     parent(Z, X),
@@ -65,6 +63,16 @@ sister(X, Y) :-
     parent(Z, X),
     parent(Z, Y),
     person(X, female),
+    X \= Y.
+
+% Исправление предиката для определения двоюродных отношений
+cousin(X, Y) :-
+    parent(P1, X),
+    parent(P2, Y),
+    P1 \= P2,
+    parent(GP, P1),
+    parent(GP, P2),
+    person(X, male),
     person(Y, female),
     X \= Y.
 
@@ -77,20 +85,21 @@ ancestor(X, Y) :-
 
 % Запуск функций 
 run :-
-    nl, write("отец - дочь"), nl,
-    daughter(X, Y),
-    format('~w отец ~w', [X, Y]), nl,
+    nl, write("двоюродный брат - двоюродная сестра"), nl,
+    setof((X, Y), cousin(X, Y), Cousins),
+    member((X, Y), Cousins),
+    format('~w двоюродный брат ~w', [X, Y]), nl,
     fail.
 run :-
-    nl, write("сестра - сестра"), nl,
-    setof((X, Y), sister(X, Y), Sisters),
-    member((X, Y), Sisters),
-    format('~w сестра ~w', [X, Y]), nl,
+    nl, write("сыновья Вячеслава"), nl,
+    setof(X, (father("Вячеслав", X), person(X, male)), Sons),
+    member(X, Sons),
+    format('~w сын Вячеслава', [X]), nl,
     fail.
 run :-
-    nl, write("Потомки Валентины"), nl,
-    ancestor("Валентина", X),
-    format('~w потомок Валентины', [X]), nl,
+    nl, write("Потомки Ольги"), nl,
+    ancestor("Ольга", X),
+    format('~w потомок Ольги', [X]), nl,
     fail.
 
 run :-
