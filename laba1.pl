@@ -83,7 +83,8 @@ run :-
     fail.
 run :-
     nl, write("сестра - сестра"), nl,
-    sister(X, Y),
+    setof((X, Y), sister(X, Y), Sisters),
+    member((X, Y), Sisters),
     format('~w сестра ~w', [X, Y]), nl,
     fail.
 run :-
